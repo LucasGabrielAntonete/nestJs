@@ -1,21 +1,17 @@
 import { Controller, Get } from '@nestjs/common';
-import { PrismaService } from './database/prisma.service';
-import { randomUUID } from 'crypto';
-
+import { CreateCategoryBody } from './dtos/create-categoria-body';
+import { CategoriaRepository } from './repositories/categoria-repository';
 @Controller()
 export class AppController {
-  constructor(private prisma: PrismaService,) {}
+  constructor(private categoriaRepository: CategoriaRepository) {}
 
-  @Get()
-  async getHello() {
-   const Categoria = await this.prisma.categoria.create({
-    data: {
-      id: randomUUID(),
-      nome: 'Categoria 1',
-      descricao: 'Descrição da categoria 1',
-    }
-   });
+  @Post()
+  async getHello(@Body() body: CreateCategoryBody) {
 
+    const {nome, descricao} = body;
+
+    const this.categoriaRepository.create(nome, descricao);
+  
     return {
       Categoria
     } 
